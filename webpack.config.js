@@ -2,8 +2,8 @@ var path = require('path');
 var HtmlwebpackPlugin = require('html-webpack-plugin');
 //定义了一些文件夹的路径
 var ROOT_PATH = path.resolve(__dirname);
-var CSS_PATH = path.resolve(ROOT_PATH, 'css');
-var JS_PATH = path.resolve(ROOT_PATH, 'js');
+var CSS_PATH = path.resolve(ROOT_PATH, 'src/css');
+var JS_PATH = path.resolve(ROOT_PATH, 'src/js');
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 
 module.exports = {
@@ -14,19 +14,12 @@ module.exports = {
     path: BUILD_PATH,
     filename: 'bundle.js'
   },
-  //localhost使用
-  devServer: {
-    historyApiFallback: true,
-    hot: true,
-    inline: true,
-    progress: true,
-  },
   //CSS及style相关module
   module: {
     loaders: [
       {
         test: /\.scss$/,
-        loaders: ['style', 'css', 'sass'],
+        loaders: ['style', 'css', 'autoprefixer', 'sass'],
         include: CSS_PATH
       },
       {
@@ -34,21 +27,36 @@ module.exports = {
         loader: 'url?limit=8192'
       },
       {
-        test:/\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
+        test: /\.json$/,
+        loader: 'json'
       },
       {
-        test:/\.jsx$/,
-        loader: 'babel-loader!jsx-loader?harmony'.
+        test:/\.jsx?$/,
+        loader: 'babel-loader!jsx-loader?harmony',
         exclude: /node_modules/
       }
     ]
   },
-  //添加我们的插件 会自动生成一个html文件
+  //localhost使用
+  devServer: {
+    historyApiFallback: true,
+    hot: true,
+    inline: true,
+    progress: true,
+  },
+  // 添加此插件 会自动生成一个html文件
   plugins: [
     new HtmlwebpackPlugin({
-      title: 'Hello World app'
+      title: 'Hello World app',
+      //favicon:'./src/img/favicon.ico', favicon路径
+      filename:'index.html',    //生成的html存放路径，相对于 path
+      template:'src/index.html',    //html模板路径
+      inject:true,    //允许插件修改哪些内容，包括head与body
+      hash:true,    //为静态资源生成hash值
+      minify:{    //压缩HTML文件
+        removeComments:true,    //移除HTML中的注释
+        collapseWhitespace:false    //删除空白符与换行符
+      }
     })
   ]
 };
