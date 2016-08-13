@@ -31,11 +31,26 @@ module.exports = {
         loader: 'json'
       },
       {
-        test:/\.jsx?$/,
-        loader: 'babel-loader!jsx-loader?harmony',
+        test: /\.jsx$/,
+        loader: 'babel-loader'
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        query: {presets:['es2015','react']},
         exclude: /node_modules/
       }
+
+      // {
+      //   test: /\.js$/,
+      //   loader: 'babel-loader',
+      //   query: {presets: ['es2015']},
+      //   exclude: /node_modules/
+      // }
     ]
+  },
+  resolve: {// 现在你require文件的时候可以直接使用require('file')，不用使用require('file.js')
+    extensions: ['', '.js','.jsx', '.json']
   },
   //localhost使用
   devServer: {
