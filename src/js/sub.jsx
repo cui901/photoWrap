@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-
 var imgDatas = require('../data/data.json');
 
 //图像由模块导入，路径处理
@@ -23,7 +22,7 @@ var ImgFigure = React.createClass({
             <figure>
                 <img src={this.props.data.img}/>
                 <figcaption>
-                    <strong></strong>
+                    <strong>{this.props.data.caption}</strong>
                 </figcaption>
             </figure>
         )
