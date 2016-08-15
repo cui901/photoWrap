@@ -1,9 +1,8 @@
 @import "./variables.scss";
 
-h1{
-  color: $wutong;
-  background: url(../images/001.jpg);
-}
-h2{
-  animation: none;
+html,body{height: 100%;}
+
+.stage{width: 100%;height: 100%;background-color: $wutong;}
+.img-sec{background-color: #fff;
+    figure{background-color: orange;margin: 5px 0;}
 }

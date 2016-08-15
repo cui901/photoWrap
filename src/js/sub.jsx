@@ -1,16 +1,62 @@
-require('../css/main.scss');
-
 import React from 'react';
-import ReactDom from 'react-dom';
-// console.log(React);
+import ReactDOM from 'react-dom';
 
-var arr = [
-    <li>看到你就说明差不多好使了</li>,
-    <li>然后就去睡觉！</li>
-];
+
+var imgDatas = require('../data/data.json');
+
+//图像由模块导入，路径处理
+var imageDataArray = (function getImageUrl(imgDatas){
+    var imgArray = [];
+    for(var i = 0 ; i < imgDatas.length ; i++){
+        var singleImageData = imgDatas[i];
+        //有点困惑（require里变量不能带路径？比如./这样的东西）
+        singleImageData.img = require( '../images/' + singleImageData.img );
+        imgArray[i] = singleImageData;
+    }
+    return imgArray;
+})(imgDatas)
+
+
+var ImgFigure = React.createClass({
+    render: function () {
+        return(
+            <figure>
+                <img src={this.props.data.img}/>
+                <figcaption>
+                    <strong></strong>
+                </figcaption>
+            </figure>
+        )
+    }
+})
+
+
+var GalleryByReactApp = React.createClass({
+    render: function () {
+
+        var controllerUnits = [],
+            imgFigures = [];
+
+        imageDataArray.forEach(function (value) {
+            imgFigures.push(<ImgFigure data={value} />);
+        });
+        console.log(imgFigures);
+
+        return (
+            <section className="stage">
+                <section className="img-sec">
+                    {imgFigures}
+                </section>
+                <nav className="controller-nav">
+                    {controllerUnits}
+                </nav>
+            </section>
+        );
+    }
+})
 
 ReactDOM.render(
-    <ul>
-        {arr}
-    </ul>, document.getElementById('app')
+    <GalleryByReactApp/>, document.getElementById('app')
 );
+
+module.exports = GalleryByReactApp;
