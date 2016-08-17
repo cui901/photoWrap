@@ -2,7 +2,10 @@
 
 html,body{height: 100%;}
 
-.stage{width: 100%;height: 100%;background-color: $wutong;}
-.img-sec{background-color: #fff;
-    figure{background-color: orange;margin: 5px 0;}
+.stage{width: 100%;height: 100%;}
+.img-sec{
+    figure{width: 490px;height: 370px;margin: 5px 0;background-color: #999;padding: 20px;box-sizing: border-box;
+        .img{}
+        .caption{display: block;text-align: center;margin-top: 10px;font-size: 18px;}
+    }
 }
